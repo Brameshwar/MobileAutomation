@@ -10,4 +10,6 @@
     - SLF4J
 
 ##### Runner file location is [sample_testng_runner.xml](testRunners/sample_testng_runner.xml)
+##### Sample test case is [SampleTestCase](/src/test/java/com/mobile/SampleTestCase.java)
+
 
