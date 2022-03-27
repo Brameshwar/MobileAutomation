@@ -27,7 +27,6 @@ public class TestExecutionContext {
         catch (Exception e){}
     }
 
-    @Slf4j
     @Getter
     private class TestExecutionCtx{
 

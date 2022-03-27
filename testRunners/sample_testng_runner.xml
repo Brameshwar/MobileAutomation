@@ -13,7 +13,7 @@
         <parameter name="deviceName" value="Pixel123"/>
 
         <classes>
-            <class name="com.mobile.TestCase"/>
+            <class name="com.mobile.SampleTestCase"/>
         </classes>
 
     </test>
