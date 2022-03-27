@@ -1,0 +1,21 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Demo-Android" verbose="4" parallel="tests" thread-count="1">
+    <parameter name="platformName" value="android"/>
+    <parameter name="platformVersion" value="9.0"/>
+    <parameter name="test.env" value="QA"/>
+    <parameter name="isLocalRun" value="true"/>
+    <parameter name="appLocation" value="app/android/someApp.apk"/>
+    <parameter name="appBasePackage" value="com.someOrrName.*"/>
+    <parameter name="isCaptureVideoEnabled" value="true"/>
+
+    <test name="Android" parallel="methods" thread-count="1">
+        <parameter name="deviceName" value="Pixel123"/>
+
+        <classes>
+            <class name="com.mobile.TestCase"/>
+        </classes>
+
+    </test>
+
+</suite>
