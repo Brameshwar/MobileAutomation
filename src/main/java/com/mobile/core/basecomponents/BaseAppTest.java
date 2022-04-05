@@ -5,6 +5,7 @@ import com.mobile.core.config.AppiumDriverConfig;
 import com.mobile.core.utils.SocketUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.screenrecording.CanRecordScreen;
@@ -20,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.ServerSocket;
 import java.nio.file.Files;
@@ -43,6 +45,13 @@ public class BaseAppTest {
     private String videosLocation;
 
 
+    protected <T extends BaseAppPage> T getPage(Class<T> cls){
+
+        BaseAppPage baseAppPage = new BaseAppPage(appDriver.get());
+        return (T) baseAppPage.getPage(cls);
+
+    }
+
     @BeforeTest(alwaysRun = true)
     public void initTestNGTest(ITestContext iTestContext){
 
@@ -64,6 +73,8 @@ public class BaseAppTest {
                             .usingPort(4723)
                             .withStartUpTimeOut(AppiumDriverConfig.getInstance().getAppiumServerTimeOut()
                                     , TimeUnit.SECONDS));
+
+            appiumDriverLocalService.start();
 
         }
         else
@@ -179,7 +190,7 @@ public class BaseAppTest {
 
             DesiredCapabilities localCaps = getLocalCapabilities(testNGParams);
             if(testNGParams.get("platformName").equalsIgnoreCase("android")){
-                AppiumDriver<MobileElement> temp = new AppiumDriver<>(localCaps);
+                AppiumDriver<MobileElement> temp = new AndroidDriver(localCaps);
                 appDriver.set(temp);
             }
             else

@@ -6,6 +6,7 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -13,8 +14,10 @@ import java.util.TreeMap;
 @Getter
 @Slf4j
 public class SearchPage extends BaseAppPage<HomePage> {
-    public SearchPage(AppiumDriver driver) {
-        super(driver);
+
+    public SearchPage(BaseAppPage page) {
+        super(page);
+        PageFactory.initElements(driver,this);
     }
 
     @AndroidFindBy(xpath="Xpath for Android")

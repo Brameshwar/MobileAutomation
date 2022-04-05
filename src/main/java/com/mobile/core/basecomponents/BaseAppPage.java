@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.Duration;
 
 @Slf4j
@@ -29,6 +31,11 @@ public class BaseAppPage<T extends BaseAppPage<T>> {
         this.wait = new WebDriverWait(driver,  AppiumDriverConfig.getInstance().getWedDriverWait());
         this.driver = driver;
 
+    }
+
+    public BaseAppPage(BaseAppPage page){
+        this.driver = page.driver;
+        this.wait = page.wait;
     }
 
     protected AppiumDriver getDriver(){
@@ -99,4 +106,25 @@ public class BaseAppPage<T extends BaseAppPage<T>> {
         }
     }
 
+    public <P extends BaseAppPage> P getPage(Class<P> cls)  {
+
+        P pageInstance = null;
+
+        Constructor<T>[] constructors = (Constructor<T>[]) cls.getConstructors();
+        for(Constructor c:constructors){
+            Class<T>[] paramTypes = c.getParameterTypes();
+            if(paramTypes.length == 1 && BaseAppPage.class.isAssignableFrom(paramTypes[0])) {
+                try {
+                    pageInstance = (P) c.newInstance(this);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return  pageInstance;
+    }
 }

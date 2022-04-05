@@ -34,8 +34,8 @@ public class SampleTestCase extends BaseAppTest {
     public void validateSearch(JSONObject jsonObject) {
         log.info("Staring the validation for Search functionality");
         final SoftAssert s_assert = new SoftAssert();
-        HomePage homePage = new HomePage(getAppDriver());
-        SearchPage searchPage = new SearchPage(getAppDriver());
+        HomePage homePage = getPage(HomePage.class);
+        SearchPage searchPage = getPage(SearchPage.class);
 
         SampleTestData sampleTestData = new ObjectMapper().convertValue(jsonObject, SampleTestData.class);
 
